@@ -1,20 +1,13 @@
 import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
-import {
-  LockOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import {
-  LoginForm,
-  ProFormCheckbox,
-  ProFormText,
-} from '@ant-design/pro-components';
-import {Alert, Divider, message, Space, Tabs} from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
+import { Alert, Divider, message, Space, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { history, useModel } from 'umi';
 import styles from './index.less';
-import {Link} from "@umijs/preset-dumi/lib/theme";
-import {PLANET_LINK, SYSTEM_LOGO} from "@/constants";
+import { Link } from '@umijs/preset-dumi/lib/theme';
+import { PLANET_LINK, SYSTEM_LOGO } from '@/constants';
 
 const LoginMessage: React.FC<{
   content: string;
@@ -36,15 +29,14 @@ const Login: React.FC = () => {
   const fetchUserInfo = async () => {
     const userInfo = await initialState?.fetchUserInfo?.();
     if (userInfo) {
-      await setInitialState((s) => ({...s, currentUser: userInfo,
-      }));
+      await setInitialState((s) => ({ ...s, currentUser: userInfo }));
     }
   };
 
   const handleSubmit = async (values: API.LoginParams) => {
     try {
       // 登录
-      const user = await login({...values, type,});
+      const user = await login({ ...values, type });
       if (user) {
         const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
@@ -70,9 +62,13 @@ const Login: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
-          logo={<img alt="logo" src={SYSTEM_LOGO}/>}
-          title="编程导航知识星球"
-          subTitle={<a href={PLANET_LINK} target="_blank" rel="noreferrer">最好的编程学习知识圈子</a>}
+          logo={<img alt="logo" src={SYSTEM_LOGO} />}
+          title="月泽的用户中心"
+          subTitle={
+            <a href={PLANET_LINK} target="_blank" rel="noreferrer">
+              月光洒泽世
+            </a>
+          }
           initialValues={{
             autoLogin: true,
           }}
@@ -81,10 +77,10 @@ const Login: React.FC = () => {
           }}
         >
           <Tabs activeKey={type} onChange={setType}>
-            <Tabs.TabPane key="account" tab={'账号密码登录'}/>
+            <Tabs.TabPane key="account" tab={'账号密码登录'} />
           </Tabs>
           {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'错误的账号和密码'}/>
+            <LoginMessage content={'错误的账号和密码'} />
           )}
           {type === 'account' && (
             <>
@@ -92,7 +88,7 @@ const Login: React.FC = () => {
                 name="userAccount"
                 fieldProps={{
                   size: 'large',
-                  prefix: <UserOutlined className={styles.prefixIcon}/>,
+                  prefix: <UserOutlined className={styles.prefixIcon} />,
                 }}
                 placeholder="请输入账号"
                 rules={[
@@ -106,7 +102,7 @@ const Login: React.FC = () => {
                 name="userPassword"
                 fieldProps={{
                   size: 'large',
-                  prefix: <LockOutlined className={styles.prefixIcon}/>,
+                  prefix: <LockOutlined className={styles.prefixIcon} />,
                 }}
                 placeholder="请输入密码"
                 rules={[
